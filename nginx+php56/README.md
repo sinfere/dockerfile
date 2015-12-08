@@ -1,4 +1,4 @@
-# nginx+php-fpm
+# nginx + php56
 Expose port 7001. 
 
 Usage:
