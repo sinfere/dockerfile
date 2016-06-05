@@ -7,18 +7,16 @@ RUN yum -y install --setopt=tsflags=nodocs epel-release && yum clean all
 RUN rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 ADD remi.repo /etc/yum.repos.d/
 
-RUN yum -y install php php-bcmath php-devel php-fpm php-gd php-json php-mbstring php-mcrypt php-opcache php-mysqlnd php-pdo
+RUN yum -y install --setopt=tsflags=nodocs php70 php70-php-bcmath php70-php-devel php70-php-gd php70-php-json php70-php-mbstring php70-php-mcrypt php70-php-xml php70-php-pecl-zip php70-php-opcache php70-php-mysqlnd php70-php-pdo
 
-ADD nginx.repo /etc/yum.repos.d/
-RUN yum -y install nginx
+RUN yum -y install --setopt=tsflags=nodocs  python-pip
+RUN yum clean all
 
-RUN yum -y install python-pip && pip install "pip>=1.4,<1.5" --upgrade
 RUN pip install supervisor
 
-ADD nginx.conf /etc/nginx
-ADD php-fpm/www.conf /etc/php-fpm.d/
+ADD php.ini /etc/opt/remi/php70/
 ADD supervisord.conf /etc/
 
-EXPOSE 7001
+EXPOSE 80
 
 CMD ["/usr/bin/supervisord"]
